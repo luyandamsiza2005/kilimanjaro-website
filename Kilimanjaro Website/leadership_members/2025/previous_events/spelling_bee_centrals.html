@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article - Kilimanjaro</title>
+  <link rel="icon" href="images/kili_logo.png" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      background-color: #4e0506;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+      z-index: 10;
+      min-width: 150px;
+      overflow: hidden;
+    }
+
+    .dropdown a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      transition: background 0.3s;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    #title .kiliman {
+      color: black;
+    }
+
+    #title .jaro {
+      color: white;
+    }
+
+    .article-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 15px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .main-image-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .main-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .thumbnails img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .thumbnails img.active {
+      border-color: white;
+    }
+
+    .gallery-title {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .meta-info {
+      margin: 30px 0 15px;
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    .meta-info span {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    .article-content {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      position: relative;
+      z-index: 10;
+      margin-top: 60px;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 {
+        font-size: 32px;
+      }
+
+      .article-content {
+        font-size: 16px;
+      }
+
+      .thumbnails img {
+        width: 60px;
+        height: 45px;
+      }
+
+      .gallery-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+
+  <!-- FontAwesome for social icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <!-- Hamburger Menu -->
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Logo Area -->
+    <div class="logo-group">
+      <img src="../../../images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="../../../images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown" id="dropdown-menu">
+      <a href="../../../Index.html">Home</a>
+      <a href="../../2025/leadership.html">Leadership</a>
+      <a href="../../../Games.html">Games</a>
+      <a href="../../../Contact.html">Contact</a>
+      <a href="../../../About.html">About</a>
+      <a href="../../../Admin_Login.html">Admin Login</a>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+  </div>
+
+  <!-- Article Section -->
+  <div class="article-container">
+
+    <!-- Image Gallery -->
+    <div class="main-image-container">
+      <img id="mainImage" src="images/spelling_bee_centrals1.png" alt="Main" class="main-image" />
+      
+      <div class="thumbnails">
+        <img src="images/spelling_bee_centrals1.png" alt="Thumb 1" class="thumb active" onclick="changeImage(this)">
+        <img src="images/spelling_bee_centrals2.png" alt="Thumb 2" class="thumb" onclick="changeImage(this)">
+        <img src="images/spelling_bee_centrals3.png" alt="Thumb 3" class="thumb" onclick="changeImage(this)">
+      </div>
+
+      <!-- Title under thumbnails -->
+      <h2 class="gallery-title">Kilimanjaro and Horizon Host Spelling Bee at UJ</h2>
+    </div>
+
+    <!-- Meta Info -->
+    <div class="meta-info">
+      <span><strong>Written by:</strong> Luyanda Msiza</span>
+      <span><strong>Venue:</strong> Ndlovukazi Exam Venue UJ APB</span>
+      <span style="margin-bottom: 20px;"><strong>Date:</strong> 1 September 2025</span>
+    </div>
+
+    <!-- Article Content -->
+    <div class="article-content">
+      <p style="margin-bottom: 20px;">On the 1st of August, Kilimanjaro Men's Residence and Horizon Female Residence hosted a fun and exciting Spelling Bee competition at the Ndlovukazi Exam Venue at the University of Johannesburg, Auckland Park Bunting Road Campus.</p>
+
+      <p style="margin-bottom: 20px;">The event was a great success and gave students a chance to show off their spelling skills and support each other. We would like to thank Pick n Pay for sponsoring the event and helping to make it possible.</p>
+
+      <p style="margin-bottom: 20px;">Well done to all the students who took part in the competition. You all did an amazing job. A special congratulations to the students who made it to the final round and walked away as winners! We also want to thank the Kilimanjaro leadership team for their support and effort in making sure everything ran smoothly.</p>
+
+      <p style="margin-bottom: 20px;">Lastly, thank you to our special guests from Magnolia and Impumelelo Female Residences for coming through and supporting the event. Your presence was truly appreciated. It was a great night filled with learning, laughter, and good vibes.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" rel="noopener" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <!-- JS for Image Switching and Menu -->
+  <script>
+    function changeImage(thumbnail) {
+      const mainImage = document.getElementById('mainImage');
+      const allThumbs = document.querySelectorAll('.thumb');
+      allThumbs.forEach(t => t.classList.remove('active'));
+      thumbnail.classList.add('active');
+      mainImage.src = thumbnail.src;
+    }
+
+    function toggleMenu() {
+      const dropdown = document.getElementById('dropdown-menu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>

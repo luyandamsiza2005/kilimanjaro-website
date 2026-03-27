@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Announcements</title>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<style>
+  body { font-family: Arial, sans-serif; background:#4e0506; color:white; padding:20px; }
+  h1 { text-align:center; }
+  form { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:10px; }
+  input[type=text], textarea { padding:10px; border-radius:5px; border:none; width:100%; }
+  button { padding:10px; border:none; border-radius:5px; background:white; color:#4e0506; cursor:pointer; font-weight:bold; }
+  .announcement { background:rgba(255,255,255,0.1); margin:10px 0; padding:15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; }
+  .announcement button { background:red; color:white; padding:5px 10px; font-size:14px; border-radius:5px; }
+</style>
+</head>
+<body>
+
+<h1>Manage Announcements</h1>
+
+<form id="announcement-form">
+  <textarea id="announcement-text" placeholder="Write your announcement..." required></textarea>
+  <button type="submit">Add Announcement</button>
+</form>
+
+<div id="announcements-list" style="max-width:600px; margin:20px auto;"></div>
+
+<script>
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhl8-z01pNxtiL6kWwmla79OFzsOamHnA",
+    authDomain: "kilimanjaro-28f6d.firebaseapp.com",
+    projectId: "kilimanjaro-28f6d",
+    storageBucket: "kilimanjaro-28f6d.firebasestorage.app",
+    messagingSenderId: "1034940817803",
+    appId: "1:1034940817803:web:51be29aeff42e296870f8e",
+    measurementId: "G-BEL0CY2F31"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+
+  // Check if user is logged in
+  auth.onAuthStateChanged(user => {
+    if(!user){
+      alert("You must be logged in to access this page!");
+      window.location.href = "Admin_Login.html";
+    } else {
+      loadAnnouncements();
+    }
+  });
+
+  // Add announcement
+  document.getElementById('announcement-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const text = document.getElementById('announcement-text').value.trim();
+    if(text){
+      db.collection("announcements").add({
+        text: text,
+        timestamp: firebase.firestore.Timestamp.now()
+      }).then(() => {
+        document.getElementById('announcement-text').value = '';
+        loadAnnouncements();
+      });
+    }
+  });
+
+  // Load announcements
+  function loadAnnouncements(){
+    const listDiv = document.getElementById('announcements-list');
+    listDiv.innerHTML = '';
+    db.collection("announcements").orderBy("timestamp", "desc").get().then(snapshot => {
+      const now = new Date();
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const created = data.timestamp.toDate();
+        const diffDays = (now - created)/(1000*60*60*24);
+        const div = document.createElement('div');
+        div.className = 'announcement';
+        div.innerHTML = `<span>${data.text}</span>`;
+        const delBtn = document.createElement('button');
+        delBtn.innerText = "Delete";
+        delBtn.onclick = () => {
+          db.collection("announcements").doc(doc.id).delete().then(loadAnnouncements);
+        }
+        div.appendChild(delBtn);
+        // Show all announcements to admin, no 3-day limit
+        listDiv.appendChild(div);
+      });
+    });
+  }
+</script>
+</body>
+</html>

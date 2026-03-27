@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kilimanjaro | Learning Tools</title>
+  <link rel="icon" href="images/kili_logo.png" type="image/png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #4e0506;
+      color: white;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 8px 10px;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    #title h1 {
+      font-size: 42px;
+    }
+
+    #title .kiliman { color: black; }
+    #title .jaro { color: white; }
+
+    #title p {
+      font-size: 18px;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .category-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .category-section h2 {
+      margin-bottom: 15px;
+      font-size: 24px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 5px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .tool-box:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .tool-box p {
+      font-size: 13px;
+      margin-top: 8px;
+      color: #ddd;
+      font-weight: normal;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 { font-size: 28px; }
+      #title p { font-size: 14px; }
+      .logo-group img { height: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu">
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Facilities.html">Facilities</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+  </div>
+
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>It's Not Far After All</p>
+  </div>
+
+  <!-- Learning Tools Sections -->
+  <div class="category-section">
+    <h2>UJ Tools</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://www.uj.ac.za/library/databases/" target="_blank">Library Database<p></p></a>
+      <a class="tool-box" href="https://ulink.uj.ac.za/Files/BusServices/BusSchedule2025.pdf" target="_blank">Bus Schedule<p>Don't miss busses</p></a>
+      <a class="tool-box" href="https://www.uj.ac.za/teaching-and-learning/academic-development-and-support/centre-for-psychological-services-and-career-development-psycad/" target="_blank">PsyCad<p>Centre for Psychological Services and Career Development (PsyCaD)</p></a>
+      <a class="tool-box" href="https://forms.office.com/Pages/ResponsePage.aspx?id=zVp4-u82vEGKlImEEyfgRbSq-Wv4GVJHk9Dp3wpUYr9UNkg2RFdJOTk2MDhZMTBJRlQwSTJOS1pRTS4u" target="_blank">Community Engagement<p>Community Engagement Volunteer Programme Registration</p></a>
+      <a class="tool-box" href="https://studentjobboard.ci.hr/applicant/index.php" target="_blank">Student Job Board<p>Apply for a job</p></a>
+      <a class="tool-box" href="https://www.uj.ac.za/about/registrars-portfolio/centre-for-health-and-wellness/" target="_blank">Centre For Student Health and Wellness<p></p></a>
+      <a class="tool-box" href="https://outlook.office365.com/book/UJClinicBookings@ujac.onmicrosoft.com/?ismsaljsauthenabled=true" target="_blank">UJ Clinic Booking<p>Book clinic services with this form</p></a>
+      <a class="tool-box" href="https://rcdms.uj.ac.za/?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMjQxMDA5MzMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdHVkZW50IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjpbIk1zaXphIiwibHV5YW5kYW1zaXphNjY2QGdtYWlsLmNvbSJdLCJleHAiOjE3NTc0MTUzMDAsImlzcyI6InVMaW5rU1NPQXBpIiwiYXVkIjoidUxpbmtTU09DbGllbnQifQ.ry6IMOdS5A2KXxrjnfMz2bfIhXKfIjvgkOAjXmI9nogD4Uf6bX3n4qf5-iaCEPTBQNDMrC27lajKDuDmDr1RV09i_1V-rpYChsXtnVrIOM6WGcQYhqL7R1bTxmqerfuBbeqoYpq0kP791-9AOnnA3NucbhgTNcuIPMbpGY3LF0BBFdMvJhQCH0ECqpYtsc7jQOXcwYcx86vGFlSIvSLaZ6JmSuq3DrTGXc4eWXSxP5S9ZzOb4pMdUiq7QkiQi7XX4JV6Hd2X704F6POW-h15NoM5VpviKSayzqEq0vcEhPdi76HGQ6kfgIho4B_0AomXE_khNNiQPJcv9RRRpo-UXA" target="_blank">RCDMS<p>Research Capacity Development</p></a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('dropdown-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>

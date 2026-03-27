@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kilimanjaro | Games</title>
+  <link rel="icon" href="images/kili_logo.png" type="image/png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #4e0506;
+      color: white;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 8px 10px;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    #title h1 {
+      font-size: 48px;
+    }
+
+    #title .kiliman { color: black; }
+    #title .jaro { color: white; }
+
+    #title p {
+      font-size: 18px;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    #category-filter {
+      display: block;
+      margin: 20px auto 30px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: white;
+      color: #4e0506;
+      max-width: 250px;
+    }
+
+    #games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto 60px;
+    }
+
+    .game-box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s;
+      text-decoration: none;
+    }
+
+    .game-box:hover {
+      transform: scale(1.03);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .game-box img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    .game-box p {
+      padding: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 { font-size: 32px; }
+      #title p { font-size: 14px; }
+      .logo-group img { height: 30px; }
+      .game-box p { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu">
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Facilities.html">Facilities</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+  </div>
+
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>It's Not Far After All</p>
+  </div>
+
+  <select id="category-filter" onchange="filterGames()">
+    <option value="All">All</option>
+    <option value="Arcade">Arcade</option>
+    <option value="Vehicles">Vehicles</option>
+    <option value="Strategy">Strategy</option>
+    <option value="Action">Action</option>
+  </select>
+
+  <div id="games-grid"></div>
+
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('dropdown-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    const games = [
+      { title: "Stack Fire Ball", url: "https://www.onlinegames.io/games/2021/unity/stack-fire-ball/index.html", category: "Arcade", image: "stack-fire-ball.png" },
+      { title: "Cake Match Puzzle", url: "https://cloud.onlinegames.io/games/2024/unity3/cake-match-puzzle/index-og.html", category: "Arcade", image: "cake-match-puzzle.png" },
+      { title: "Nuts & Bolts", url: "https://cloud.onlinegames.io/games/2025/unity/nuts-and-bolts-puzzle/index-og.html", category: "Arcade", image: "nuts-and-bolts.png" },
+      { title: "Geometry Dash", url: "https://www.onlinegames.io/games/2023/q2/geometry-dash-freezenova/index.html", category: "Arcade", image: "geometry-dash.png" },
+      { title: "Snake", url: "https://cloud.onlinegames.io/games/2024/phaser/snake/index-og.html", category: "Arcade", image: "snake.png" },
+      { title: "Block Blast", url: "https://cloud.onlinegames.io/games/2024/unity3/block-blast/index-og.html", category: "Arcade", image: "block-blast.png" },
+      { title: "Get On Top", url: "https://www.onlinegames.io/games/2024/code/6/get-on-top/index.html", category: "Arcade", image: "get-on-top.png" },
+
+      { title: "GTA Simulator", url: "https://www.onlinegames.io/games/2023/unity2/gta-simulator/index.html", category: "Vehicles", image: "gta-simulator.png" },
+      { title: "Flight Simulator", url: "https://cloud.onlinegames.io/games/2023/unity2/real-flight-simulator/index.html", category: "Vehicles", image: "flight-sim.png" },
+      { title: "Highway Traffic", url: "https://www.onlinegames.io/games/2022/unity/highway-traffic/index.html", category: "Vehicles", image: "highway-traffic.png" },
+      { title: "Moto Racing", url: "https://cloud.onlinegames.io/games/2022/construct/122/jul-moto-racing/index-og.html", category: "Vehicles", image: "moto-racing.png" },
+      { title: "Edy's Simulator", url: "https://www.onlinegames.io/games/2022/unity/edys-car-simulator/index.html", category: "Vehicles", image: "edys-simulator.png" },
+      { title: "Taxi Sim", url: "https://www.onlinegames.io/games/2022/unity/taxi-simulator/index.html", category: "Vehicles", image: "taxi-sim.png" },
+      { title: "Crazy Racer", url: "https://www.onlinegames.io/games/2022/unity3/2-player-crazy-racer/index.html", category: "Vehicles", image: "crazy-racer.png" },
+      { title: "Drift King", url: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html", category: "Vehicles", image: "drift-king.png" },
+      { title: "Futuristic Racer", url: "https://cloud.onlinegames.io/games/2021/2/futuristic-racer/index-og.html", category: "Vehicles", image: "futuristic-racer.png" },
+
+      { title: "Solitaire", url: "https://cloud.onlinegames.io/games/2025/html/solitaire/index-og.html", category: "Strategy", image: "solitaire.png" },
+      { title: "Fast Food Rush", url: "https://cloud.onlinegames.io/games/2025/unity/fast-food-rush/index-og.html", category: "Strategy", image: "fast-food-rush.png" },
+      { title: "Mahjong", url: "https://plugplay.games/embed/65d79ab22b1edf7bfed4cb047ce2067ace965cd2", category: "Strategy", image: "mahjong.png" },
+      { title: "8 Ball Pool", url: "https://www.onlinegames.io/games/2022/unity3/8-ball-pool-billiard/index.html", category: "Strategy", image: "8-ball-pool.png" },
+      { title: "Four Colors", url: "https://www.onlinegames.io/games/2023/code/four-colors/index.html", category: "Strategy", image: "four-colors.png" },
+
+      { title: "Rooftop Duel", url: "https://cloud.onlinegames.io/games/2025/construct/213/rooftop-duel/index-og.html", category: "Action", image: "rooftop-duel.png" },
+      { title: "Rome Sim", url: "https://www.onlinegames.io/games/2021/unity/rome-simulator/index.html", category: "Action", image: "rome-sim.png" },
+      { title: "GTA Simulator", url: "https://www.onlinegames.io/games/2023/unity2/gta-simulator/index.html", category: "Action", image: "gta-sim.png" },
+      { title: "Stickman Parkour", url: "https://cloud.onlinegames.io/games/2024/construct/219/stickman-parkour/index-og.html", category: "Action", image: "stickman-parkour.png" },
+      { title: "Stickman GTA", url: "https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html", category: "Action", image: "stickman-gta.png" },
+      { title: "FPS Strike", url: "https://cloud.onlinegames.io/games/2024/unity2/fps-strike/index-og.html", category: "Action", image: "fps-strike.png" },
+      { title: "Stickman Destruction", url: "https://www.onlinegames.io/games/2021/unity3/stickman-destruction/index.html", category: "Action", image: "stickman-destruction.png" },
+      { title: "Archer Hero", url: "https://www.onlinegames.io/games/2023/unity/archer-hero/index.html", category: "Action", image: "archer-hero.png" }
+    ];
+
+    const grid = document.getElementById("games-grid");
+
+    function createGameCard(game) {
+      const div = document.createElement("a");
+      div.href = game.url;
+      div.target = "_blank";
+      div.className = "game-box";
+      div.setAttribute("data-category", game.category);
+
+      const img = document.createElement("img");
+      img.src = `images/Games/${game.image}`;
+      img.alt = game.title;
+      img.onerror = function () {
+        this.onerror = null;
+        this.src = "images/Games/no-image.png";
+      };
+
+      const label = document.createElement("p");
+      label.textContent = game.title;
+
+      div.appendChild(img);
+      div.appendChild(label);
+
+      return div;
+    }
+
+    function loadGames(category = "All") {
+      const filtered = category === "All" ? games : games.filter(g => g.category === category);
+      grid.innerHTML = ""; // clear old content
+      const fragment = document.createDocumentFragment();
+      filtered.forEach(game => fragment.appendChild(createGameCard(game)));
+      grid.appendChild(fragment);
+    }
+
+    function filterGames() {
+      const selected = document.getElementById("category-filter").value;
+      loadGames(selected);
+    }
+
+    loadGames(); // Load all on first visit
+  </script>
+
+</body>
+</html>

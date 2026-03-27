@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedbacks - Kilimanjaro</title>
+  <link rel="icon" href="images/kili_logo.png" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      font-family: Arial, sans-serif;
+      background-color: #4e0506;
+      color: white;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+      z-index: 10;
+      min-width: 150px;
+      overflow: hidden;
+    }
+
+    .dropdown a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      transition: background 0.3s;
+    }
+
+    .dropdown a:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .logo-group { display: flex; align-items: center; gap: 10px; }
+    .logo-group img { height: 40px; }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title h1 { font-size: 48px; font-weight: bold; }
+    #title .kiliman { color: black; }
+    #title .jaro { color: white; }
+
+    #feedbackContainer {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 15px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .feedback-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      word-wrap: break-word;
+    }
+
+    .feedback-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .feedback-header h3 {
+      font-size: 20px;
+      margin: 0;
+      color: #fff;
+    }
+
+    .feedback-date {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .feedback-message {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #eee;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover { color: #d44638; }
+    footer a.tiktok:hover { color: #00f2ea; }
+
+    @media (max-width: 600px) {
+      #title h1 { font-size: 32px; }
+      .feedback-message { font-size: 15px; }
+    }
+  </style>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div id="header">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+
+    <div class="dropdown" id="dropdown-menu">
+      <a href="Index.html">Home</a>
+      <a href="leadership_members/2025/leadership.html">Leadership</a>
+      <a href="Games.html">Games</a>
+      <a href="Contact.html">Contact</a>
+      <a href="About.html">About</a>
+      <a href="Admin_Login.html">Admin Login</a>
+    </div>
+  </div>
+
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>Feedbacks</p>
+  </div>
+
+  <div id="feedbackContainer">
+    <p style="text-align:center;">Loading feedbacks...</p>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+  </footer>
+
+  <!-- ✅ Correct Firebase v10 Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhl8-z01pNxtiL6kWwmla79OFzsOamHnA",
+      authDomain: "kilimanjaro-28f6d.firebaseapp.com",
+      projectId: "kilimanjaro-28f6d",
+      storageBucket: "kilimanjaro-28f6d.appspot.com",
+      messagingSenderId: "1034940817803",
+      appId: "1:1034940817803:web:51be29aeff42e296870f8e",
+      measurementId: "G-BEL0CY2F31"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const container = document.getElementById('feedbackContainer');
+
+    window.toggleMenu = function() {
+      const dropdown = document.getElementById('dropdown-menu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    };
+
+    // Fetch and display feedbacks
+    const q = query(collection(db, "feedback"), orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
+      container.innerHTML = '';
+
+      if (snapshot.empty) {
+        container.innerHTML = '<p style="text-align:center; color:#ccc;">No feedbacks yet.</p>';
+        return;
+      }
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const name = data.name || 'Anonymous';
+        const message = data.message || '';
+        const date = data.timestamp?.toDate?.().toLocaleString() || '';
+
+        const card = document.createElement('div');
+        card.className = 'feedback-card';
+        card.innerHTML = `
+          <div class="feedback-header">
+            <h3>${name}</h3>
+            <div class="feedback-date">${date}</div>
+          </div>
+          <div class="feedback-message">${message}</div>
+        `;
+        container.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>

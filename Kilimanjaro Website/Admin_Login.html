@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login - Kilimanjaro</title>
+  <link rel="icon" href="images/kili_logo.png"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      background-color: #4e0506;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    #title .kiliman {
+      color: black;
+    }
+
+    #title .jaro {
+      color: white;
+    }
+
+    #login-container {
+      max-width: 400px;
+      margin: 40px auto;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 10px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: white;
+      color: #4e0506;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #cccccc;
+    }
+
+    .error {
+      color: #ff7b7b;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 {
+        font-size: 32px;
+      }
+
+      #login-container {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
+  </style>
+
+  <!-- FontAwesome for social icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>Admin Login</p>
+  </div>
+
+  <!-- Login Form -->
+  <div id="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+      <p class="error" id="error-message"></p>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_uj/" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@kiliman_uj" target="_blank" rel="noopener" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <!-- Firebase JS SDKs -->
+  <script type="module">
+    // Firebase imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhl8-z01pNxtiL6kWwmla79OFzsOamHnA",
+      authDomain: "kilimanjaro-28f6d.firebaseapp.com",
+      projectId: "kilimanjaro-28f6d",
+      storageBucket: "kilimanjaro-28f6d.appspot.com",
+      messagingSenderId: "1034940817803",
+      appId: "1:1034940817803:web:51be29aeff42e296870f8e",
+      measurementId: "G-BEL0CY2F31"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+
+    // Handle form submit
+    const loginForm = document.getElementById("login-form");
+    const errorMessage = document.getElementById("error-message");
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Redirect to dashboard
+          window.location.href = "Dashboard.html";
+        })
+        .catch((error) => {
+          errorMessage.textContent = "Invalid email or password.";
+          console.error(error);
+        });
+    });
+  </script>
+</body>
+</html>

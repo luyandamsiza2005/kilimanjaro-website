@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kili Choir Registration</title>
+  <link rel="icon" type="images/kili_logo.png" href="images/kili_logo.png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <style>
+    /* === Reset & Theme === */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { font-family: Arial, sans-serif; height:100%; overflow-x:hidden; }
+    body { background-color:#4e0506; position:relative; color:white; }
+    body::before { content:""; position:absolute; top:0; left:0; width:100%; height:100%; backdrop-filter:blur(10px); background-color: rgba(128,0,0,0.5); z-index:-1; }
+
+    #header { display:flex; justify-content:space-between; align-items:center; padding:10px 15px; background:rgba(255,255,255,0.1); z-index:20; position:relative; }
+    .logo-group { display:flex; align-items:center; gap:10px; }
+    .logo-group img { height:40px; }
+    .hamburger { display:flex; flex-direction:column; justify-content:space-around; width:25px; height:20px; cursor:pointer; }
+    .hamburger span { height:3px; background:white; border-radius:2px; }
+
+    .dropdown { display:none; position:absolute; top:60px; left:15px; background: rgba(0,0,0,0.8); border-radius:5px; z-index:10; min-width:150px; overflow:hidden; }
+    .dropdown a { display:block; padding:10px; color:white; text-decoration:none; transition:0.3s; }
+    .dropdown a:hover { background: rgba(255,255,255,0.2); }
+
+    #title { text-align:center; margin:30px 0 20px; z-index:10; position:relative; }
+    #title h1 { font-size:48px; }
+    #title .kiliman { color:black; }
+    #title .jaro { color:white; }
+    #title p { font-style:italic; font-size:18px; }
+
+    .form-container { max-width:500px; margin:20px auto; padding:20px; background:rgba(0,0,0,0.6); border-radius:10px; }
+    .form-container h2 { text-align:center; margin-bottom:15px; }
+    .form-container label { display:block; margin-top:10px; font-weight:bold; }
+    .form-container input, .form-container select { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:none; }
+    .form-container button { margin-top:15px; width:100%; padding:10px; background:white; color:#4e0506; font-weight:bold; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
+    .form-container button:hover { background:#f0e6e6; }
+
+    .user-info { max-width:500px; margin:20px auto; padding:15px; background:rgba(0,0,0,0.5); border-radius:10px; }
+    .user-info p { margin:5px 0; }
+    .edit-btn { margin-top:10px; padding:8px; background:white; color:#4e0506; border:none; border-radius:5px; cursor:pointer; }
+
+    footer { text-align:center; padding:20px; background:rgba(0,0,0,0.7); margin-top:30px; }
+    footer a { margin:0 15px; font-size:24px; color:white; text-decoration:none; }
+    footer a:hover { color:#d44638; }
+    footer a.tiktok:hover { color:#00f2ea; }
+
+    @media(max-width:600px){
+      #title h1 { font-size:32px; }
+      #title p { font-size:16px; }
+      .logo-group img { height:30px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div id="header">
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <div class="logo-group"><img src="images/kili_logo.png"><img src="images/uj_20_years.png"></div>
+    <div class="dropdown" id="dropdown-menu">
+      <a href="index.html">Home</a>
+      <a href="Admin_Login.html">Admin Login</a>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div id="title">
+    <h1><span class="kiliman">KILI</span><span class="jaro">CHOIR</span></h1>
+    <p>Register or Edit Your Choir Info</p>
+  </div>
+
+  <!-- Registration/Login Form -->
+  <div class="form-container" id="auth-container">
+    <h2>Register / Login</h2>
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Email">
+    <label>Full Name</label>
+    <input type="text" id="fullName" placeholder="Full Name">
+    <label>Contact Number</label>
+    <input type="text" id="contact" placeholder="Contact Number">
+    <label>Voice Type</label>
+    <select id="voiceType">
+      <option value="">Select Voice Type</option>
+      <option value="Alto">Alto</option>
+      <option value="Soprano">Soprano</option>
+      <option value="1st Tenor">1st Tenor</option>
+      <option value="2nd Tenor">2nd Tenor</option>
+      <option value="Bass/Baritone">Bass/Baritone</option>
+    </select>
+    <label>Residence</label>
+    <input type="text" id="residence" placeholder="Residence">
+
+    <button onclick="registerUser()">Register / Login</button>
+    <p id="auth-message" style="margin-top:10px;"></p>
+  </div>
+
+  <!-- Logged In Info -->
+  <div class="user-info" id="user-info" style="display:none;">
+    <h2>Your Info</h2>
+    <p><strong>Email:</strong> <span id="user-email"></span></p>
+    <p><strong>Full Name:</strong> <span id="user-fullName"></span></p>
+    <p><strong>Contact:</strong> <span id="user-contact"></span></p>
+    <p><strong>Voice Type:</strong> <span id="user-voiceType"></span></p>
+    <p><strong>Residence:</strong> <span id="user-residence"></span></p>
+    <button class="edit-btn" onclick="enableEdit()">Edit Info</button>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+  </footer>
+
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhl8-z01pNxtiL6kWwmla79OFzsOamHnA",
+      authDomain: "kilimanjaro-28f6d.firebaseapp.com",
+      projectId: "kilimanjaro-28f6d",
+      storageBucket: "kilimanjaro-28f6d.appspot.com",
+      messagingSenderId: "1034940817803",
+      appId: "1:1034940817803:web:51be29aeff42e296870f8e"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const dropdown = document.getElementById('dropdown-menu');
+    function toggleMenu(){ dropdown.style.display = dropdown.style.display==='block'?'none':'block'; }
+
+    function registerUser(){
+      const email = document.getElementById('email').value.trim();
+      const fullName = document.getElementById('fullName').value.trim();
+      const contact = document.getElementById('contact').value.trim();
+      const voiceType = document.getElementById('voiceType').value;
+      const residence = document.getElementById('residence').value.trim();
+      const msg = document.getElementById('auth-message');
+
+      if(!email || !fullName || !contact || !voiceType || !residence){ msg.textContent='All fields required.'; return; }
+
+      db.collection('ChoirMembers').doc(email).get().then(doc=>{
+        if(doc.exists){
+          // Already registered, log in
+          showUser(doc.data());
+          msg.textContent = 'Welcome back! You can edit your info below.';
+        } else {
+          // New registration
+          db.collection('ChoirMembers').doc(email).set({fullName, contact, voiceType, residence}).then(()=>{
+            msg.textContent='Successfully registered!';
+            showUser({email, fullName, contact, voiceType, residence});
+          });
+        }
+      });
+    }
+
+    function showUser(data){
+      document.getElementById('auth-container').style.display='none';
+      document.getElementById('user-info').style.display='block';
+      document.getElementById('user-email').textContent=data.email || document.getElementById('email').value;
+      document.getElementById('user-fullName').textContent=data.fullName;
+      document.getElementById('user-contact').textContent=data.contact;
+      document.getElementById('user-voiceType').textContent=data.voiceType;
+      document.getElementById('user-residence').textContent=data.residence;
+    }
+
+    function enableEdit(){
+      document.getElementById('auth-container').style.display='block';
+      document.getElementById('email').value=document.getElementById('user-email').textContent;
+      document.getElementById('fullName').value=document.getElementById('user-fullName').textContent;
+      document.getElementById('contact').value=document.getElementById('user-contact').textContent;
+      document.getElementById('voiceType').value=document.getElementById('user-voiceType').textContent;
+      document.getElementById('residence').value=document.getElementById('user-residence').textContent;
+    }
+  </script>
+</body>
+</html>

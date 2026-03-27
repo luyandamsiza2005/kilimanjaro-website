@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Kilimanjaro</title>
+  <link rel="icon" href="images/kili_logo.png" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      background-color: #4e0506;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+
+    /* Hamburger menu */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+      z-index: 10;
+      min-width: 150px;
+      overflow: hidden;
+    }
+
+    .dropdown a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      transition: background 0.3s;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    #title .kiliman {
+      color: black;
+    }
+
+    #title .jaro {
+      color: white;
+    }
+
+    #content {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 15px;
+      line-height: 1.7;
+      font-size: 18px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #content h2 {
+      margin-top: 30px;
+      font-size: 24px;
+      border-bottom: 1px solid white;
+      padding-bottom: 5px;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 {
+        font-size: 32px;
+      }
+
+      #content {
+        font-size: 16px;
+      }
+    }
+  </style>
+
+  <!-- FontAwesome for social icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <!-- Hamburger Menu -->
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Logo Area -->
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown" id="dropdown-menu">
+      <a href="Index.html">Home</a>
+      <a href="leadership_members/2025/leadership.html">Leadership</a>
+      <a href="Games.html">Games</a>
+      <a href="Contact.html">Contact</a>
+      <a href="About.html">About</a>
+      <a href="Admin_Login.html">Admin Login</a>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>About Us</p>
+  </div>
+
+  <!-- Main Content -->
+  <div id="content">
+    <p>
+      Built on the hills of Cottesloe, near Auckland Park in Johannesburg, South Africa is Kilimanjaro Men’s Residence.
+    </p>
+    <p>
+      Kilimanjaro caters for 310 junior male students from the Auckland Park Bunting Road Campus (APB Campus). The Residence is a neat high-rise building with eleven floors that consist of five sharing and twenty-one single rooms on each floor.
+    </p>
+    <p>
+      Kilimanjaro is managed by the Residence Manager with the support of the following personnel:
+    </p>
+    <ul>
+      <li>
+        <strong>3 floor representatives (HK, RAA and Mentor) per floor:</strong>
+        These representatives assist and work hand-in-glove with the Res Manager and the House Warden, ensuring that residents on their floor are well represented.
+      </li>
+      <li>
+        <strong>One security officer per shift 24/7:</strong>
+        To ensure that safety is achieved in our residence, we have at least one security guard on duty dedicated to Kilimanjaro Men’s Residence 24 hours a day, every day.
+      </li>
+      <li>
+        <strong>Six full-time cleaners:</strong>
+        Hygiene is important to us. We have full-time cleaners who ensure that our residence is maintained to the highest possible hygienic standards at all times.
+      </li>
+    </ul>
+
+    <h2>Contacts</h2>
+    <p>
+      <strong>Residence Manager:</strong><br />
+      Name: Latoya Njokwe<br />
+      Tel: <br />
+      Email: <a href="mailto:latoyam@uj.ac.za" style="color: white;">latoyam@uj.ac.za</a>
+    </p>
+
+    <p>
+      <strong>House Warden:</strong><br />
+      Name: Dr Luthando Nyaba<br />
+      Tel: 011 559 6010<br />
+      Email: <a href="mailto:Lnyaba@uj.ac.za" style="color: white;">Lnyaba@uj.ac.za</a>
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" rel="noopener" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <!-- JS for Menu -->
+  <script>
+    function toggleMenu() {
+      const dropdown = document.getElementById('dropdown-menu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>

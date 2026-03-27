@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facilities - Kilimanjaro</title>
+  <link rel="icon" type="image/png" href="images/kili_logo.png" />
+
+  <!-- Font Awesome -->
+  <!-- Font Awesome 6 Free CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      overflow-x: hidden;
+      background-color: #4e0506;
+      color: white;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    /* HEADER */
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+      z-index: 10;
+      min-width: 150px;
+    }
+
+    .dropdown a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      transition: background 0.3s;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    /* TITLE */
+    #title {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    #title .kiliman {
+      color: black;
+    }
+
+    #title .jaro {
+      color: white;
+    }
+
+    #title p {
+      font-size: 18px;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* FACILITIES GRID */
+    #facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+    }
+
+    .facility-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      text-align: center;
+      padding: 20px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    .facility-box:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .facility-box i {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #fffacd;
+    }
+
+    .facility-box span {
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      #title h1 {
+        font-size: 32px;
+      }
+
+      #title p {
+        font-size: 16px;
+      }
+
+      .logo-group img {
+        height: 30px;
+      }
+
+      .facility-box {
+        padding: 15px;
+      }
+
+      .facility-box i {
+        font-size: 24px;
+      }
+
+      .facility-box span {
+        font-size: 14px;
+      }
+    }
+
+    #heading
+    {
+       margin-left: 30%;
+       font-size: 19px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div id="header">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo" />
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo" />
+    </div>
+
+    <div class="dropdown" id="dropdown-menu">
+      <a href="About.html">About</a>
+      <a href="Contact.html">Contact</a>
+      <a href="leadership_members/2025/leadership.html">Leadership</a>
+      <a href="Admin_Login.html">Admin Login</a>
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>It's Not Far After All</p>
+  </div>
+
+  <h2 id="heading">Available Facilities</h2>
+
+  <!-- FACILITIES GRID -->
+  <div id="facilities-grid">
+    <div class="facility-box"><i class="fa-solid fa-wifi"></i><span>Uncapped WiFi</span></div>
+    <div class="facility-box"><i class="fas fa-book-reader"></i><span>Study Area</span></div>
+    <div class="facility-box"><i class="fas fa-tshirt"></i><span>Laundry Facilities</span></div>
+    <div class="facility-box"><i class="fas fa-utensils"></i><span>Kitchen Areas</span></div>
+    <div class="facility-box"><i class="fas fa-tint"></i><span>Water Backup (Jojo)</span></div>
+    <div class="facility-box"><i class="fas fa-bolt"></i><span>Electricity Backup</span></div>
+    <div class="facility-box"><i class="fas fa-shield-alt"></i><span>24/7 Security</span></div>
+    <div class="facility-box"><i class="fas fa-fire-extinguisher"></i><span>Fire Safety</span></div>
+    <div class="facility-box"><i class="fas fa-futbol"></i><span>Soccer</span></div>
+    <div class="facility-box"><i class="fas fa-volleyball-ball"></i><span>Netball</span></div>
+    <div class="facility-box"><i class="fas fa-tv"></i><span>TV Room</span></div>
+    <div class="facility-box"><i class="fas fa-table"></i><span>Pool Table</span></div>
+    <div class="facility-box"><i class="fas fa-tree"></i><span>Chill Spots</span></div>
+    <div class="facility-box"><i class="fas fa-comment-dots"></i><span>Suggestion Box</span></div>
+    <div class="facility-box"><i class="fas fa-parking"></i><span>Parking</span></div>
+    <div class="facility-box"><i class="fas fa-broom"></i><span>Weekday Cleaning</span></div>
+    <div class="facility-box"><i class="fas fa-chalkboard-teacher"></i><span>Study Sessions</span></div>
+    <div class="facility-box"><i class="fas fa-paint-brush"></i><span>FADA Craft Space</span></div>
+    <div class="facility-box"><i class="fas fa-users"></i><span>Res Culture</span></div>
+    <div class="facility-box"><i class="fas fa-hand-holding-heart"></i><span>KiliCares Food Drive</span></div>
+    <div class="facility-box"><i class="fas fa-soap"></i><span>Kleanimanjaro Cleaning Initiative</span></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" rel="noopener" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    function toggleMenu() {
+      const dropdown = document.getElementById('dropdown-menu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>

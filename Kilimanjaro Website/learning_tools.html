@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kilimanjaro | Learning Tools</title>
+  <link rel="icon" href="images/kili_logo.png" type="image/png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #4e0506;
+      color: white;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 15px;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 8px 10px;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    #title h1 {
+      font-size: 42px;
+    }
+
+    #title .kiliman { color: black; }
+    #title .jaro { color: white; }
+
+    #title p {
+      font-size: 18px;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .category-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .category-section h2 {
+      margin-bottom: 15px;
+      font-size: 24px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 5px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .tool-box:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .tool-box p {
+      font-size: 13px;
+      margin-top: 8px;
+      color: #ddd;
+      font-weight: normal;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 { font-size: 28px; }
+      #title p { font-size: 14px; }
+      .logo-group img { height: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu">
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Facilities.html">Facilities</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+  </div>
+
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>It's Not Far After All</p>
+  </div>
+
+  <!-- Learning Tools Sections -->
+  <div class="category-section">
+    <h2>A. Coding & Tech (10)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp<p>Learn coding with projects</p></a>
+      <a class="tool-box" href="https://www.w3schools.com/" target="_blank">W3Schools<p>HTML, CSS, JS, web basics</p></a>
+      <a class="tool-box" href="https://www.codecademy.com/" target="_blank">Codecademy<p>Interactive coding tutorials</p></a>
+      <a class="tool-box" href="https://developer.mozilla.org/" target="_blank">MDN Web Docs<p>Official docs for web dev</p></a>
+      <a class="tool-box" href="https://www.kaggle.com/" target="_blank">Kaggle<p>ML datasets & notebooks</p></a>
+      <a class="tool-box" href="https://leetcode.com/" target="_blank">LeetCode<p>Coding interview practice</p></a>
+      <a class="tool-box" href="https://www.hackerrank.com/" target="_blank">HackerRank<p>Coding challenges</p></a>
+      <a class="tool-box" href="https://lab.github.com/" target="_blank">GitHub Learning Lab<p>GitHub skills</p></a>
+      <a class="tool-box" href="https://cs50.harvard.edu/x/" target="_blank">CS50 Harvard<p>Free CS course</p></a>
+      <a class="tool-box" href="https://stackoverflow.com/" target="_blank">Stack Overflow<p>Ask coding questions</p></a>
+    </div>
+  </div>
+
+  <div class="category-section">
+    <h2>B. AI & Machine Learning (7)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://colab.research.google.com/" target="_blank">Google Colab<p>Free Jupyter notebooks</p></a>
+      <a class="tool-box" href="https://huggingface.co/" target="_blank">HuggingFace<p>AI models and datasets</p></a>
+      <a class="tool-box" href="https://platform.openai.com/" target="_blank">OpenAI Platform<p>Test AI models</p></a>
+      <a class="tool-box" href="https://runwayml.com/" target="_blank">Runway ML<p>AI for creators</p></a>
+      <a class="tool-box" href="https://paperswithcode.com/" target="_blank">Papers With Code<p>ML research + code</p></a>
+      <a class="tool-box" href="https://www.kdnuggets.com/" target="_blank">KDnuggets<p>AI/ML tutorials</p></a>
+      <a class="tool-box" href="https://www.deeplearning.ai/" target="_blank">DeepLearning.AI<p>AI courses</p></a>
+    </div>
+  </div>
+
+  <div class="category-section">
+    <h2>C. Academic & Study Tools (10)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://scholar.google.com/" target="_blank">Google Scholar<p>Research papers</p></a>
+      <a class="tool-box" href="https://www.zotero.org/" target="_blank">Zotero<p>Reference manager</p></a>
+      <a class="tool-box" href="https://www.mendeley.com/" target="_blank">Mendeley<p>Citations & research</p></a>
+      <a class="tool-box" href="https://quizlet.com/" target="_blank">Quizlet<p>Flashcards</p></a>
+      <a class="tool-box" href="https://apps.ankiweb.net/" target="_blank">Anki<p>Spaced repetition</p></a>
+      <a class="tool-box" href="https://www.coursera.org/" target="_blank">Coursera<p>University courses</p></a>
+      <a class="tool-box" href="https://www.edx.org/" target="_blank">edX<p>MIT, Harvard courses</p></a>
+      <a class="tool-box" href="https://www.khanacademy.org/" target="_blank">Khan Academy<p>All subjects</p></a>
+      <a class="tool-box" href="https://www.researchgate.net/" target="_blank">ResearchGate<p>Academic network</p></a>
+      <a class="tool-box" href="https://www.citethisforme.com/" target="_blank">RefME<p>Citation generator</p></a>
+    </div>
+  </div>
+
+  <div class="category-section">
+    <h2>D. Productivity & Organization (7)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://www.notion.so/" target="_blank">Notion<p>All-in-one workspace</p></a>
+      <a class="tool-box" href="https://trello.com/" target="_blank">Trello<p>Project boards</p></a>
+      <a class="tool-box" href="https://asana.com/" target="_blank">Asana<p>Team organization</p></a>
+      <a class="tool-box" href="https://todoist.com/" target="_blank">Todoist<p>Task manager</p></a>
+      <a class="tool-box" href="https://pomofocus.io/" target="_blank">Pomofocus<p>Pomodoro timer</p></a>
+      <a class="tool-box" href="https://evernote.com/" target="_blank">Evernote<p>Note-taking</p></a>
+      <a class="tool-box" href="https://www.mindmeister.com/" target="_blank">MindMeister<p>Mind mapping</p></a>
+    </div>
+  </div>
+
+  <div class="category-section">
+    <h2>E. Personal Development & Life Skills (6)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://ed.ted.com/" target="_blank">TED-Ed<p>Educational videos</p></a>
+      <a class="tool-box" href="https://www.ted.com/talks" target="_blank">TED Talks<p>Inspiring talks</p></a>
+      <a class="tool-box" href="https://www.duolingo.com/" target="_blank">Duolingo<p>Learn languages</p></a>
+      <a class="tool-box" href="https://www.babbel.com/" target="_blank">Babbel<p>Language learning</p></a>
+      <a class="tool-box" href="https://www.futurelearn.com/" target="_blank">FutureLearn<p>Short courses</p></a>
+      <a class="tool-box" href="https://www.skillshare.com/" target="_blank">Skillshare<p>Creative skills</p></a>
+    </div>
+  </div>
+
+  <div class="category-section">
+    <h2>F. Career & Networking (5)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://www.linkedin.com/learning/" target="_blank">LinkedIn Learning<p>Professional courses</p></a>
+      <a class="tool-box" href="https://www.glassdoor.com/" target="_blank">Glassdoor<p>Reviews & salaries</p></a>
+      <a class="tool-box" href="https://www.indeed.com/career-advice" target="_blank">Indeed Career Guide<p>Job tips</p></a>
+      <a class="tool-box" href="https://www.canva.com/resumes/templates/" target="_blank">Canva<p>Resume builder</p></a>
+      <a class="tool-box" href="https://angel.co/" target="_blank">AngelList<p>Startups & jobs</p></a>
+    </div>
+  </div>
+
+  <div class="category-section">
+    <h2>G. Fun but Educational (5)</h2>
+    <div class="tools-grid">
+      <a class="tool-box" href="https://www.sporcle.com/" target="_blank">Sporcle<p>Quizzes & trivia</p></a>
+      <a class="tool-box" href="https://brilliant.org/" target="_blank">Brilliant<p>Math & science puzzles</p></a>
+      <a class="tool-box" href="https://www.typingclub.com/" target="_blank">TypingClub<p>Typing practice</p></a>
+      <a class="tool-box" href="https://www.keybr.com/" target="_blank">Keybr<p>Typing skills</p></a>
+      <a class="tool-box" href="https://www.howstuffworks.com/" target="_blank">HowStuffWorks<p>Fun knowledge</p></a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('dropdown-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>

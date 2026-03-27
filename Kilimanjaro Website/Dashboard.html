@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Kilimanjaro</title>
+  <link rel="icon" href="images/kili_logo.png"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      background-color: #4e0506;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(128, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 20;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-group img {
+      height: 40px;
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title h1 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    #title .kiliman {
+      color: black;
+    }
+
+    #title .jaro {
+      color: white;
+    }
+
+    #dashboard-content {
+      max-width: 500px;
+      margin: 40px auto;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    #dashboard-content h2 {
+      margin-bottom: 20px;
+    }
+
+    .dashboard-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: white;
+      color: #4e0506;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .dashboard-button:hover {
+      background-color: #ddd;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 15px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #d44638;
+    }
+
+    footer a.tiktok:hover {
+      color: #00f2ea;
+    }
+
+    @media (max-width: 600px) {
+      #title h1 {
+        font-size: 32px;
+      }
+
+      .dashboard-button {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
+
+  <!-- FontAwesome for social icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header">
+    <div class="logo-group">
+      <img src="images/kili_logo.png" alt="Kilimanjaro Logo">
+      <img src="images/uj_20_years.png" alt="UJ 20 Years Logo">
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div id="title">
+    <h1><span class="kiliman">KILIMAN</span><span class="jaro">JARO</span></h1>
+    <p>Admin Dashboard</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div id="dashboard-content">
+    <h2>Welcome, Admin</h2>
+    <a class="dashboard-button" href="https://groupcal.page.link/YFebGHa1KsvEUVwm7" target="_blank">
+      Leadership Calendar
+    </a>
+    <a class="dashboard-button" href="https://docs.google.com/forms/d/e/1FAIpQLSdN-HbjFhvHdI-u8H8M-Q3M4QvHWFL3R2OVKUDVxCtXabOnRA/viewform?usp=header" target="_blank">
+      Article Writing
+    </a>
+    <a class="dashboard-button" href="https://forms.gle/DQo4y2M5GUu9wLxT7" target="_blank">
+      Sports Fixture
+    </a>
+    <button class="dashboard-button" id="logout-btn">Logout</button>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://www.instagram.com/kilimanjaro_residence_uj/" target="_blank" rel="noopener" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@itsnotfar_afterall" target="_blank" rel="noopener" aria-label="TikTok" class="tiktok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </footer>
+
+  <!-- Firebase Auth Protection -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhl8-z01pNxtiL6kWwmla79OFzsOamHnA",
+      authDomain: "kilimanjaro-28f6d.firebaseapp.com",
+      projectId: "kilimanjaro-28f6d",
+      storageBucket: "kilimanjaro-28f6d.appspot.com",
+      messagingSenderId: "1034940817803",
+      appId: "1:1034940817803:web:51be29aeff42e296870f8e",
+      measurementId: "G-BEL0CY2F31"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    // Redirect to login if not logged in
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "admin_login.html";
+      }
+    });
+
+    // Logout logic
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            window.location.href = "admin_login.html";
+          })
+          .catch((error) => {
+            console.error("Logout error:", error);
+          });
+      });
+    }
+  </script>
+
+</body>
+</html>
